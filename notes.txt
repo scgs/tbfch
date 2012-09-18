@@ -8,10 +8,6 @@ fridge
 
 map of cuyler > random map
 
-inventory
-    skip over letter i so it closes the inventory
-    same for d on drop
-
 confusion + fireball
     show spell range and aoe
 
