@@ -1,6 +1,17 @@
 # TO ADD #
 ##########
 
+colors/letters
+    monsters -> red
+    items -> green
+    mouthwash -> m
+    racket -> r
+    fridge and other objects -> white
+    fridge -> f
+
+multi-level persistence
+    all objects get z coordinate, persist level changes
+
 fridge
     attack to open
     case 1: The fridge contains useful food and drinks! spawn 3 health potions
