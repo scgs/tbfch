@@ -1,0 +1,50 @@
+# TO ADD #
+##########
+
+fridge
+    attack to open
+    case 1: The fridge contains useful food and drinks! spawn 3 health potions
+    case 2: The fridge is broken and full of roaches! spawn 3 roaches
+
+map of cuyler > random map
+
+inventory
+    skip over letter i so it closes the inventory
+    same for d on drop
+
+confusion + fireball
+    show spell range and aoe
+
+fireball
+    damage depends on distance from center
+
+ai
+    enemies pursue around corners
+
+companion
+    joins you on your quest
+    follows, attacks dumbly
+    high agi and stamina, low strength
+
+weapons
+    tennis racket
+    hangers
+    laundry hamper
+    flip flop
+    batteries (upgrade)
+    steam iron
+
+rename
+    fireball -> mouthwash
+    other spells ???
+
+story
+    start in cuyler 522
+    fight your way to the basement on the other side of cuyler
+        entry 5 2 level = start
+        entry 5 1 level = 
+        left a level = fight across
+        entry 6 1 level = ???
+        entry 6 2 level = ???
+        3 level = fight across hallway
+        go down either 2 or 4 stair to basement, turn on lights
