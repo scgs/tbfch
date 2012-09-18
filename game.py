@@ -239,7 +239,7 @@ class Item:
  
     def pick_up(self):
         #add to the player's inventory and remove from the map
-        if len(inventory) >= 26:
+        if len(inventory) >= 25:
             message('Your inventory is full, cannot pick up ' + self.owner.name + '.', libtcod.red)
         else:
             inventory.append(self.owner)
@@ -616,8 +616,12 @@ def player_move_or_attack(dx, dy):
         fov_recompute = True
  
  
-def menu(header, options, width):
-    if len(options) > 26: raise ValueError('Cannot have a menu with more than 26 options.')
+def menu(header, options, width, skip = None):
+    maxoptions = 26
+    if skip:
+        maxoptions = 25
+    
+    if len(options) > maxoptions: raise ValueError('Cannot have a menu with more than 26 options.')
  
     #calculate total height for the header (after auto-wrap) and one line per option
     header_height = libtcod.console_height_left_rect(con, 0, 0, width, SCREEN_HEIGHT, header)
@@ -636,6 +640,8 @@ def menu(header, options, width):
     y = header_height
     letter_index = ord('a')
     for option_text in options:
+        if skip and letter_index == ord(skip):
+            letter_index += 1
         text = '(' + chr(letter_index) + ') ' + option_text
         libtcod.console_print_left(window, 0, y, libtcod.BKGND_NONE, text)
         y += 1
@@ -655,17 +661,25 @@ def menu(header, options, width):
  
     #convert the ASCII code to an index; if it corresponds to an option, return it
     index = key.c - ord('a')
-    if index >= 0 and index < len(options): return index
+    maxindex = len(options) - 1
+    if skip and index > ord(skip) - ord('a'):
+        maxindex = len(options)
+    if index >= 0 and index <= maxindex:
+        if skip:
+            skippedindex = ord(skip) - ord('a')
+            if index == skippedindex: return None
+            if index > skippedindex: return index - 1
+        return index
     return None
  
-def inventory_menu(header):
+def inventory_menu(header, skip = None):
     #show a menu with each item of the inventory as an option
     if len(inventory) == 0:
         options = ['Inventory is empty.']
     else:
         options = [item.name for item in inventory]
  
-    index = menu(header, options, INVENTORY_WIDTH)
+    index = menu(header, options, INVENTORY_WIDTH, skip)
  
     #if an item was chosen, return it
     if index is None or len(inventory) == 0: return None
@@ -723,13 +737,13 @@ def handle_keys():
  
             if key_char == 'i':
                 #show the inventory; if an item is selected, use it
-                chosen_item = inventory_menu('Press the key next to an item to use it, or any other to cancel.\n')
+                chosen_item = inventory_menu('Press the key next to an item to use it, or any other to cancel.\n', 'i')
                 if chosen_item is not None:
                     chosen_item.use()
  
             if key_char == 'd':
                 #show the inventory; if an item is selected, drop it
-                chosen_item = inventory_menu('Press the key next to an item to drop it, or any other to cancel.\n')
+                chosen_item = inventory_menu('Press the key next to an item to drop it, or any other to cancel.\n', 'd')
                 if chosen_item is not None:
                     chosen_item.drop()
  
